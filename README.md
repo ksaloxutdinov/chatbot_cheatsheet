@@ -1,4 +1,4 @@
-# 📚 AI Chatbot Course Material Database  
+# AI Chatbot Course Material Database  
 ### A PostgreSQL Knowledge Base for Lecture PDF Processing
 
 This repository contains the full PostgreSQL database, schema, ingestion scripts, and documentation for an AI-powered chatbot designed to answer students’ questions using course lecture materials extracted from PDF slides.
@@ -8,7 +8,7 @@ It enables fast, accurate retrieval of relevant content for downstream chatbot o
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 
 This project was developed for the **Database Systems** course.  
 Our goal was to create a structured and scalable data storage solution that supports:
@@ -24,7 +24,7 @@ All processing is handled by a single Python ingestion script that fills **all t
 
 ---
 
-## 🗂️ Database Schema
+## Database Schema
 
 The knowledge base contains **five relational tables**, designed for clarity, normalization, and scalability.
 
@@ -81,9 +81,11 @@ Stores the actual text used by the AI chatbot.
 
 Text is automatically split into chunks (~800 chars max) to ensure efficient semantic search and LLM performance.
 
+![Entity Relationship Diagram](diagrams/ERD.png)
+
 ---
 
-## 🧠 Automated PDF Ingestion Pipeline
+## Automated PDF Ingestion Pipeline
 
 All PDFs are processed automatically by the script `ingest_pdfs.py`.  
 The pipeline performs:
@@ -101,7 +103,7 @@ This approach ensures a fully automated and deterministic database.
 
 ---
 
-## 🔧 How to Import the Database
+## How to Import the Database
 
 ### **Using Terminal**
 
@@ -110,7 +112,7 @@ createdb chatbot_cheatsheet_db
 psql -d chatbot_cheatsheet_db -f chatbot_cheatsheet_db.sql
 ```
 
-## 🐍 How to Run the PDF Ingestion Script
+## How to Run the PDF Ingestion Script
 
 ### Requirements
 
