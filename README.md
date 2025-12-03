@@ -85,6 +85,33 @@ Text is automatically split into chunks (~800 chars max) to ensure efficient sem
 
 ---
 
+## What SQL queries does the chatbot use?
+
+### Example: retrieve useful chunks
+```sql
+SELECT text
+FROM content_chunks
+WHERE topic_id = (SELECT id FROM topics WHERE name = 'Design patterns')
+ORDER BY page_number, chunk_index
+LIMIT 10;
+```
+
+### Example: search by keyword
+```sql
+SELECT text
+FROM content_chunks
+WHERE text ILIKE '%REST%' OR text ILIKE '%HTTP%';
+```
+
+### Example: find topics in a document
+```sql
+SELECT t.name
+FROM topics t
+JOIN document_topics dt ON dt.topic_id = t.id
+WHERE dt.document_id = 3;
+```
+---
+
 ## Automated PDF Ingestion Pipeline
 
 All PDFs are processed automatically by the script `ingest_pdfs.py`.  
