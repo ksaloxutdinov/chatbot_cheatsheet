@@ -3,16 +3,11 @@ import textwrap
 import psycopg2
 import pdfplumber
 
+PDF_DIR = "./pdfs"
 
-# ---------- CONFIGURE THIS PART ----------
-
-PDF_DIR = "./pdfs"   # folder with all PDFs
-
-# Course info – you can change this to whatever your course is
 COURSE_CODE = "CS360"
 COURSE_NAME = "Fundamentals of Software Engineering"
 
-# Postgres connection info
 DB_CONFIG = {
     "host": "localhost",
     "port": 5432,
@@ -21,11 +16,7 @@ DB_CONFIG = {
     "password": "helloworld",
 }
 
-# Max characters in one content chunk
 MAX_CHARS_PER_CHUNK = 800
-
-# ----------------------------------------
-
 
 def get_connection():
     return psycopg2.connect(**DB_CONFIG)
@@ -65,7 +56,6 @@ def upsert_document(conn, course_id, title, file_path):
 
 
 def upsert_topic(conn, name):
-    # normalize topic name a bit
     name = " ".join(name.split())
     if not name:
         name = "Untitled"
@@ -100,7 +90,6 @@ def ensure_document_topic(conn, document_id, topic_id):
 
 
 def delete_existing_chunks_for_document(conn, document_id):
-    # So re-running the script refreshes the data instead of duplicating
     with conn.cursor() as cur:
         cur.execute(
             "DELETE FROM content_chunks WHERE document_id = %s;",
@@ -110,7 +99,6 @@ def delete_existing_chunks_for_document(conn, document_id):
 
 
 def chunk_text(text, max_chars=MAX_CHARS_PER_CHUNK):
-    # Simple word-based chunking
     words = text.split()
     chunks = []
     current_words = []
@@ -151,14 +139,12 @@ def extract_topic_and_body(page_text):
 
 def process_pdf(conn, course_id, pdf_path):
     file_name = os.path.basename(pdf_path)
-    # Use file name (without extension) as document title
     title = os.path.splitext(file_name)[0]
 
     print(f"\nProcessing: {file_name}")
 
     document_id = upsert_document(conn, course_id, title, pdf_path)
 
-    # Clear old chunks for this document (so script is idempotent)
     delete_existing_chunks_for_document(conn, document_id)
 
     with pdfplumber.open(pdf_path) as pdf:
@@ -174,7 +160,6 @@ def process_pdf(conn, course_id, pdf_path):
             topic_id = upsert_topic(conn, topic_name)
             ensure_document_topic(conn, document_id, topic_id)
 
-            # Combine topic and body so that the title is part of the chunk text
             full_text = topic_name + "\n" + (body_text or "")
 
             chunks = chunk_text(full_text, MAX_CHARS_PER_CHUNK)
@@ -196,7 +181,6 @@ def main():
     try:
         course_id = ensure_course(conn, COURSE_CODE, COURSE_NAME)
 
-        # Loop through all PDFs in the folder
         for file_name in os.listdir(PDF_DIR):
             if not file_name.lower().endswith(".pdf"):
                 continue
