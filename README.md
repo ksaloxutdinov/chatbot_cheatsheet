@@ -103,8 +103,23 @@ This approach ensures a fully automated and deterministic database.
 
 ## 🔧 How to Import the Database
 
-### **Option A — Using Terminal**
+### **Using Terminal**
 
 ```bash
 createdb chatbot_cheatsheet_db
 psql -d chatbot_cheatsheet_db -f chatbot_cheatsheet_db.sql
+```
+
+## 🐍 How to Run the PDF Ingestion Script
+
+### Requirements
+
+1. Python 3
+2. PostgreSQL
+3. psycopg2-binary
+4. pdfplumber
+
+```bash
+pip install psycopg2-binary pdfplumber
+python3 scripts/ingest_pdfs.py
+```
