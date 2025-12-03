@@ -81,7 +81,7 @@ Stores the actual text used by the AI chatbot.
 
 Text is automatically split into chunks (~800 chars max) to ensure efficient semantic search and LLM performance.
 
-![Entity Relationship Diagram](diagrams/ERD.png)
+![Entity Relationship Diagram](diagrams/erd.png)
 
 ---
 
