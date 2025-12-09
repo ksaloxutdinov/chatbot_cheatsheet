@@ -3,8 +3,6 @@
 
 This repository contains the full PostgreSQL database, schema, ingestion scripts, and documentation for an AI-powered chatbot designed to answer students’ questions using course lecture materials extracted from PDF slides.
 
-Repository link: https://github.com/ksaloxutdinov/chatbot_cheatsheet
-
 The system automatically reads PDF files, extracts text, identifies topics, splits the text into searchable chunks, and stores everything in a normalized relational database.  
 It enables fast, accurate retrieval of relevant content for downstream chatbot or NLP applications.
 
