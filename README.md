@@ -22,6 +22,8 @@ Our goal was to create a structured and scalable data storage solution that supp
 
 All processing is handled by a single Python ingestion script that fills **all tables automatically**, with zero manual data entry.
 
+And use this data to retrieve it through the **chatbot**.
+
 ---
 
 ## Database Schema
@@ -152,3 +154,7 @@ psql -d chatbot_cheatsheet_db -f chatbot_cheatsheet_db.sql
 pip install psycopg2-binary pdfplumber
 python3 scripts/ingest_pdfs.py
 ```
+
+## How to Run the RAG chatbot
+
+Open the .ipynb file on Google Colab and choose GPU as the runtime processor. Make sure to upload the given .sql file.
